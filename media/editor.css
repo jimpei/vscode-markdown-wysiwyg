@@ -130,6 +130,14 @@ body.theme-light {
 #editor blockquote,
 #editor pre {
     position: relative;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#editor blockquote {
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding-left: 1em;
 }
 
 #editor p::before,
@@ -151,6 +159,15 @@ body.theme-light {
 #editor p::before { content: "P"; }
 #editor blockquote::before { content: "QUOTE"; }
 #editor pre::before { content: "CODE"; }
+
+#editor blockquote p {
+    position: static;
+    margin-bottom: 0;
+}
+
+#editor blockquote p::before {
+    content: none;
+}
 
 #editor table td p,
 #editor table th p {
