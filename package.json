@@ -1,0 +1,62 @@
+{
+  "name": "markdown-wysiwyg",
+  "displayName": "Markdown WYSIWYG (Personal)",
+  "description": "Typora風にMarkdownをその場で直接編集できるカスタムエディタ（個人利用・非配布）",
+  "version": "0.0.1",
+  "private": true,
+  "publisher": "jimpei-local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCustomEditor:markdownWysiwyg.editor"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "markdownWysiwyg.editor",
+        "displayName": "Markdown WYSIWYG",
+        "selector": [
+          {
+            "filenamePattern": "*.md"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "commands": [
+      {
+        "command": "markdownWysiwyg.openWithWysiwyg",
+        "title": "Markdown WYSIWYGで開く"
+      },
+      {
+        "command": "markdownWysiwyg.toggleWysiwyg",
+        "title": "Markdown WYSIWYGとテキスト表示を切り替え"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "vscode:prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {
+    "@milkdown/core": "^7.5.0",
+    "@milkdown/plugin-history": "^7.5.0",
+    "@milkdown/plugin-listener": "^7.5.0",
+    "@milkdown/preset-commonmark": "^7.5.0",
+    "@milkdown/preset-gfm": "^7.5.0",
+    "@milkdown/theme-nord": "^7.5.0"
+  }
+}
