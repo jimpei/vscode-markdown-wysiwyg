@@ -6,6 +6,10 @@
   "private": true,
   "license": "MIT",
   "publisher": "jimpei",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimpei/vscode-markdown-wysiwyg.git"
+  },
   "keywords": [
     "markdown",
     "wysiwyg",
