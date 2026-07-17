@@ -113,6 +113,14 @@ outlineToggle?.addEventListener('click', () => {
     outlinePanel?.classList.toggle('visible');
 });
 
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle?.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('theme-light');
+    if (themeToggle) {
+        themeToggle.textContent = isLight ? '☀' : '☽';
+    }
+});
+
 const root = document.getElementById('editor');
 if (root) {
     new MutationObserver(scheduleOutlineUpdate).observe(root, {
