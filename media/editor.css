@@ -172,7 +172,7 @@ body.outline-visible #editor {
 
 #editor li p {
     position: static;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 #editor li p::before {
