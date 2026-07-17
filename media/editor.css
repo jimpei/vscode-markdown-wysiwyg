@@ -24,6 +24,9 @@ body {
     --md-outline-item-bg-hover: #333333;
     --md-quote-bg: #303030;
     --md-quote-bg-nested: #3a3a3a;
+    --md-code-bg: #202020;
+    --md-code-inline-bg: #3a3a3a;
+    --md-code-fg: #e8e6df;
 }
 
 body.theme-light {
@@ -44,6 +47,9 @@ body.theme-light {
     --md-outline-item-bg-hover: #eaeef2;
     --md-quote-bg: #f6f8fa;
     --md-quote-bg-nested: #eaeef2;
+    --md-code-bg: #f6f8fa;
+    --md-code-inline-bg: #eaeef2;
+    --md-code-fg: #24292f;
 }
 
 #editor {
@@ -156,6 +162,39 @@ body.theme-light {
 
 #editor blockquote blockquote::before {
     content: none;
+}
+
+#editor pre {
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding: 0.8em 1em;
+    background: var(--md-code-bg);
+    border-radius: 4px;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+#editor pre,
+#editor pre code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    line-height: 1.6;
+    color: var(--md-code-fg);
+}
+
+#editor pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+#editor code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.85em;
+    background: var(--md-code-inline-bg);
+    color: var(--md-code-fg);
+    padding: 0.15em 0.4em;
+    border-radius: 3px;
 }
 
 #editor p::before,
