@@ -65,10 +65,10 @@ body.theme-light {
 }
 
 #editor {
-    width: 90%;
-    max-width: 90ch;
+    width: 100%;
+    max-width: 150ch;
     margin: 0 auto;
-    padding: 48px 32px 48px 96px;
+    padding: 48px 48px 48px 112px;
     line-height: 1.75;
     box-sizing: border-box;
     transition: margin-left 0.2s ease;
