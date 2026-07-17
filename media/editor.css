@@ -27,38 +27,57 @@ body {
     --md-code-bg: #202020;
     --md-code-inline-bg: #3a3a3a;
     --md-code-fg: #e8e6df;
+    --md-tok-comment: #7d8799;
+    --md-tok-keyword: #6fa8dc;
+    --md-tok-string: #a3be8c;
+    --md-tok-function: #eebf36;
+    --md-tok-number: #d08770;
+    --md-tok-punctuation: #9aa0a6;
 }
 
 body.theme-light {
-    --md-bg: #ffffff;
-    --md-fg: #24292f;
-    --md-heading: #0969da;
-    --md-heading-h2-border: #d0d7de;
-    --md-heading-sub: #218bff;
-    --md-strong: #9a6700;
-    --md-label: #6e7781;
-    --md-label-dim: #8c959f;
-    --md-table-border: #d0d7de;
-    --md-toggle-bg: #eaeef2;
-    --md-toggle-bg-hover: #d0d7de;
-    --md-outline-bg: #f6f8fa;
-    --md-outline-border: #d0d7de;
-    --md-outline-item-fg: #24292f;
-    --md-outline-item-bg-hover: #eaeef2;
-    --md-quote-bg: #f6f8fa;
-    --md-quote-bg-nested: #eaeef2;
-    --md-code-bg: #f6f8fa;
-    --md-code-inline-bg: #eaeef2;
-    --md-code-fg: #24292f;
+    --md-bg: #f2efe6;
+    --md-fg: #40403a;
+    --md-heading: #33698c;
+    --md-heading-h2-border: #cfc9b8;
+    --md-heading-sub: #4a86a8;
+    --md-strong: #8a6d1f;
+    --md-label: #8a8a7a;
+    --md-label-dim: #a0a090;
+    --md-table-border: #cfc9b8;
+    --md-toggle-bg: #e3dfd2;
+    --md-toggle-bg-hover: #d5d0c0;
+    --md-outline-bg: #eae6da;
+    --md-outline-border: #cfc9b8;
+    --md-outline-item-fg: #40403a;
+    --md-outline-item-bg-hover: #ddd8c9;
+    --md-quote-bg: #eae6da;
+    --md-quote-bg-nested: #e0dbcc;
+    --md-code-bg: #eae6da;
+    --md-code-inline-bg: #e0dbcc;
+    --md-code-fg: #40403a;
+    --md-tok-comment: #98917e;
+    --md-tok-keyword: #33698c;
+    --md-tok-string: #5d7d43;
+    --md-tok-function: #8a6d1f;
+    --md-tok-number: #a05e3b;
+    --md-tok-punctuation: #7a7768;
 }
 
 #editor {
     width: 90%;
-    max-width: 150ch;
+    max-width: 90ch;
     margin: 0 auto;
     padding: 48px 32px 48px 96px;
-    line-height: 1.9;
+    line-height: 1.75;
     box-sizing: border-box;
+    transition: margin-left 0.2s ease;
+}
+
+body.outline-visible #editor {
+    width: auto;
+    margin-left: 276px;
+    margin-right: 16px;
 }
 
 .milkdown {
@@ -131,9 +150,33 @@ body.theme-light {
     font-weight: bold;
 }
 
-#editor p,
+#editor p {
+    margin-bottom: 0.9em;
+}
+
+#editor ul,
+#editor ol {
+    margin: 0 0 0.9em;
+    padding-left: 1.5em;
+}
+
 #editor li {
-    margin-bottom: 1em;
+    margin-bottom: 0.3em;
+}
+
+#editor li ul,
+#editor li ol {
+    margin-top: 0.3em;
+    margin-bottom: 0;
+}
+
+#editor li p {
+    position: static;
+    margin: 0;
+}
+
+#editor li p::before {
+    content: none;
 }
 
 #editor p,
@@ -195,6 +238,50 @@ body.theme-light {
     color: var(--md-code-fg);
     padding: 0.15em 0.4em;
     border-radius: 3px;
+}
+
+#editor .token.comment,
+#editor .token.prolog,
+#editor .token.cdata {
+    color: var(--md-tok-comment);
+    font-style: italic;
+}
+
+#editor .token.keyword,
+#editor .token.atrule,
+#editor .token.selector,
+#editor .token.tag {
+    color: var(--md-tok-keyword);
+}
+
+#editor .token.string,
+#editor .token.char,
+#editor .token.attr-value,
+#editor .token.regex,
+#editor .token.template-string {
+    color: var(--md-tok-string);
+}
+
+#editor .token.function,
+#editor .token.class-name,
+#editor .token.attr-name {
+    color: var(--md-tok-function);
+}
+
+#editor .token.number,
+#editor .token.boolean,
+#editor .token.constant,
+#editor .token.builtin {
+    color: var(--md-tok-number);
+}
+
+#editor .token.punctuation,
+#editor .token.operator {
+    color: var(--md-tok-punctuation);
+}
+
+#editor .token.interpolation {
+    color: var(--md-code-fg);
 }
 
 #editor p::before,

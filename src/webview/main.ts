@@ -3,6 +3,7 @@ import { commonmark } from '@milkdown/preset-commonmark';
 import { gfm } from '@milkdown/preset-gfm';
 import { history } from '@milkdown/plugin-history';
 import { listener, listenerCtx } from '@milkdown/plugin-listener';
+import { prism } from '@milkdown/plugin-prism';
 import { nord } from '@milkdown/theme-nord';
 
 declare global {
@@ -31,6 +32,7 @@ async function createEditor(root: HTMLElement, markdown: string) {
         .use(commonmark)
         .use(gfm)
         .use(history)
+        .use(prism)
         .use(listener)
         .config((ctx) => {
             const listenerApi = ctx.get(listenerCtx);
@@ -110,7 +112,8 @@ function buildOutline() {
 const outlineToggle = document.getElementById('outline-toggle');
 const outlinePanel = document.getElementById('outline');
 outlineToggle?.addEventListener('click', () => {
-    outlinePanel?.classList.toggle('visible');
+    const visible = outlinePanel?.classList.toggle('visible');
+    document.body.classList.toggle('outline-visible', visible);
 });
 
 const themeToggle = document.getElementById('theme-toggle');
