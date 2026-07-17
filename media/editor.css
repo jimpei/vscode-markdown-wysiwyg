@@ -154,6 +154,10 @@ body.theme-light {
     background: var(--md-quote-bg-nested);
 }
 
+#editor blockquote blockquote::before {
+    content: none;
+}
+
 #editor p::before,
 #editor blockquote::before,
 #editor pre::before {
