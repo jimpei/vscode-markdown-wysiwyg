@@ -1,10 +1,16 @@
 {
   "name": "markdown-wysiwyg",
-  "displayName": "Markdown WYSIWYG (Personal)",
-  "description": "Typora風にMarkdownをその場で直接編集できるカスタムエディタ（個人利用・非配布）",
-  "version": "0.0.1",
-  "private": true,
-  "publisher": "jimpei-local",
+  "displayName": "Markdown WYSIWYG",
+  "description": "Typora風にMarkdownをその場で直接WYSIWYG編集できるカスタムエディタ",
+  "version": "0.1.0",
+  "license": "MIT",
+  "publisher": "jimpei",
+  "keywords": [
+    "markdown",
+    "wysiwyg",
+    "editor",
+    "typora"
+  ],
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -31,11 +37,13 @@
     "commands": [
       {
         "command": "markdownWysiwyg.openWithWysiwyg",
-        "title": "Markdown WYSIWYGで開く"
+        "title": "Markdown WYSIWYGで開く",
+        "category": "Markdown WYSIWYG"
       },
       {
         "command": "markdownWysiwyg.toggleWysiwyg",
-        "title": "Markdown WYSIWYGとテキスト表示を切り替え"
+        "title": "Markdown WYSIWYGとテキスト表示を切り替え",
+        "category": "Markdown WYSIWYG"
       }
     ]
   },
@@ -48,7 +56,7 @@
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^3.9.2",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.28.1",
     "typescript": "^5.5.0"
   },
   "dependencies": {
