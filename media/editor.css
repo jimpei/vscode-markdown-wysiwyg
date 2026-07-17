@@ -22,6 +22,8 @@ body {
     --md-outline-border: #3a3a3a;
     --md-outline-item-fg: #d8d8d8;
     --md-outline-item-bg-hover: #333333;
+    --md-quote-bg: #303030;
+    --md-quote-bg-nested: #3a3a3a;
 }
 
 body.theme-light {
@@ -40,6 +42,8 @@ body.theme-light {
     --md-outline-border: #d0d7de;
     --md-outline-item-fg: #24292f;
     --md-outline-item-bg-hover: #eaeef2;
+    --md-quote-bg: #f6f8fa;
+    --md-quote-bg-nested: #eaeef2;
 }
 
 #editor {
@@ -137,7 +141,17 @@ body.theme-light {
 #editor blockquote {
     margin-top: 0;
     margin-bottom: 1em;
-    padding-left: 1em;
+    padding: 0.7em 1em 0.7em 1.2em;
+    border-left: 3px solid var(--md-heading);
+    border-radius: 4px;
+    background: var(--md-quote-bg);
+}
+
+#editor blockquote blockquote {
+    margin-top: 0.8em;
+    margin-bottom: 0;
+    border-left-color: var(--md-heading-sub);
+    background: var(--md-quote-bg-nested);
 }
 
 #editor p::before,
@@ -163,6 +177,10 @@ body.theme-light {
 #editor blockquote p {
     position: static;
     margin-bottom: 0;
+}
+
+#editor blockquote p:first-child {
+    margin-top: 0;
 }
 
 #editor blockquote p::before {
