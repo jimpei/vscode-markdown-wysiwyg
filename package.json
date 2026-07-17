@@ -1,7 +1,7 @@
 {
   "name": "markdown-wysiwyg",
   "displayName": "Markdown WYSIWYG",
-  "description": "Typora風にMarkdownをその場で直接WYSIWYG編集できるカスタムエディタ",
+  "description": "Markdownをその場で直接WYSIWYG編集できるカスタムエディタ",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",

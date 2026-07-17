@@ -1,6 +1,6 @@
 # Markdown WYSIWYG
 
-Typora風に、Markdownファイルをその場で直接WYSIWYG編集できるVS Codeのカスタムエディタです。
+Markdownファイルをその場で直接WYSIWYG編集できるVS Codeのカスタムエディタです。
 
 ## 機能
 
