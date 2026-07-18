@@ -27,6 +27,7 @@ body {
     --md-code-bg: #202020;
     --md-code-inline-bg: #3a3a3a;
     --md-code-fg: #e8e6df;
+    --md-code-inline-fg: #e8e6df;
     --md-tok-comment: #7d8799;
     --md-tok-keyword: #6fa8dc;
     --md-tok-string: #a3be8c;
@@ -56,12 +57,74 @@ body.theme-light {
     --md-code-bg: #eae6da;
     --md-code-inline-bg: #e0dbcc;
     --md-code-fg: #40403a;
+    --md-code-inline-fg: #40403a;
     --md-tok-comment: #98917e;
     --md-tok-keyword: #33698c;
     --md-tok-string: #5d7d43;
     --md-tok-function: #8a6d1f;
     --md-tok-number: #a05e3b;
     --md-tok-punctuation: #7a7768;
+}
+
+/*
+ * リーディングスタイル(ブログ記事風の読み物向け表示)
+ * 配色トークン:
+ *   ライト: 文字 #08131a / 背景 #fff / 淡背景 #f5f8fa / 罫線 rgba(8,19,26,.14〜.22)
+ *   ダーク: 文字 hsla(0,0%,100%,.9) / 背景 #202a30 / 淡背景 #08131a / 罫線 hsla(0,0%,100%,.12〜.32)
+ */
+body.style-reading {
+    --md-bg: #202a30;
+    --md-fg: hsla(0, 0%, 100%, 0.9);
+    --md-heading: hsla(0, 0%, 100%, 0.9);
+    --md-heading-sub: hsla(0, 0%, 100%, 0.9);
+    --md-strong: hsla(0, 0%, 100%, 0.95);
+    --md-quote-bg: #08131a;
+    --md-quote-bg-nested: #08131a;
+    --md-table-border: hsla(0, 0%, 100%, 0.12);
+    --md-hr-border: hsla(0, 0%, 100%, 0.32);
+    --md-img-border: hsla(0, 0%, 100%, 0.12);
+    --md-code-bg: #08131a;
+    --md-code-fg: hsla(0, 0%, 100%, 0.9);
+    --md-code-inline-bg: hsla(0, 0%, 100%, 0.1);
+    --md-code-inline-fg: hsla(0, 0%, 100%, 0.9);
+    --md-toggle-bg: #2b3640;
+    --md-toggle-bg-hover: #37424d;
+    --md-outline-bg: #1a2228;
+    --md-outline-border: hsla(0, 0%, 100%, 0.12);
+    --md-outline-item-fg: hsla(0, 0%, 100%, 0.85);
+    --md-outline-item-bg-hover: #2b3640;
+}
+
+body.style-reading.theme-light {
+    --md-bg: #ffffff;
+    --md-fg: #08131a;
+    --md-heading: #08131a;
+    --md-heading-sub: #08131a;
+    --md-strong: #08131a;
+    --md-label: #9aa4aa;
+    --md-label-dim: #b8c0c5;
+    --md-quote-bg: #f5f8fa;
+    --md-quote-bg-nested: #f5f8fa;
+    --md-table-border: rgba(8, 19, 26, 0.14);
+    --md-hr-border: rgba(8, 19, 26, 0.22);
+    --md-img-border: #f5f8fa;
+    /* コードブロックは白ページ上でも黒背景(反転)で本文と区別する */
+    --md-code-bg: #08131a;
+    --md-code-fg: hsla(0, 0%, 100%, 0.9);
+    --md-code-inline-bg: #f5f8fa;
+    --md-code-inline-fg: #08131a;
+    --md-tok-comment: #7d8799;
+    --md-tok-keyword: #6fa8dc;
+    --md-tok-string: #a3be8c;
+    --md-tok-function: #eebf36;
+    --md-tok-number: #d08770;
+    --md-tok-punctuation: #9aa0a6;
+    --md-toggle-bg: #f0f3f5;
+    --md-toggle-bg-hover: #e4e9ec;
+    --md-outline-bg: #fafbfc;
+    --md-outline-border: rgba(8, 19, 26, 0.14);
+    --md-outline-item-fg: #3a444a;
+    --md-outline-item-bg-hover: #eef2f4;
 }
 
 #editor {
@@ -235,7 +298,7 @@ body.outline-visible #editor {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.85em;
     background: var(--md-code-inline-bg);
-    color: var(--md-code-fg);
+    color: var(--md-code-inline-fg);
     padding: 0.15em 0.4em;
     border-radius: 3px;
 }
@@ -358,7 +421,8 @@ body.outline-visible #editor {
 }
 
 #outline-toggle,
-#theme-toggle {
+#theme-toggle,
+#style-toggle {
     position: fixed;
     top: 16px;
     z-index: 20;
@@ -381,8 +445,15 @@ body.outline-visible #editor {
     left: 56px;
 }
 
+#style-toggle {
+    left: 96px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
 #outline-toggle:hover,
-#theme-toggle:hover {
+#theme-toggle:hover,
+#style-toggle:hover {
     background: var(--md-toggle-bg-hover);
 }
 
@@ -432,4 +503,232 @@ body.outline-visible #editor {
     color: var(--md-label);
     font-size: 13px;
     padding: 4px 8px;
+}
+
+/*
+ * リーディングスタイル: レイアウト
+ * 本文は明朝18px/行高36px、ブロック間隔36px。
+ * 見出しは負マージンで直後の本文だけ18pxに詰める。
+ */
+body.style-reading #editor {
+    /* 1行42字(本文実幅760px÷18px)。日本語の読みやすさの上限付近 */
+    max-width: 840px;
+    padding: 48px 40px 160px;
+    font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro", HGSMinchoE, "Yu Mincho", YuMincho, "MS PMincho", serif;
+    font-size: 18px;
+    line-height: 2;
+    -webkit-font-smoothing: antialiased;
+}
+
+body.style-reading #editor h1::before,
+body.style-reading #editor h2::before,
+body.style-reading #editor h3::before,
+body.style-reading #editor h4::before,
+body.style-reading #editor p::before,
+body.style-reading #editor blockquote::before,
+body.style-reading #editor pre::before,
+body.style-reading #editor table::before {
+    content: none;
+}
+
+body.style-reading #editor h1,
+body.style-reading #editor h2,
+body.style-reading #editor h3,
+body.style-reading #editor h4 {
+    padding: 0;
+    border: none;
+    font-feature-settings: "palt" 1;
+    letter-spacing: 0.04em;
+    margin-bottom: -18px;
+}
+
+body.style-reading #editor h1:last-child,
+body.style-reading #editor h2:last-child,
+body.style-reading #editor h3:last-child,
+body.style-reading #editor h4:last-child {
+    margin-bottom: 0;
+}
+
+/* h1 = 記事タイトル相当。h2以下と明確に差をつける */
+body.style-reading #editor h1 {
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-top: 72px;
+    margin-bottom: 18px;
+}
+
+body.style-reading #editor h1:first-child {
+    margin-top: 24px;
+}
+
+body.style-reading #editor h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-top: 54px;
+}
+
+body.style-reading #editor h3 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 36px;
+    margin-top: 36px;
+}
+
+body.style-reading #editor h2 + h3 {
+    margin-top: 54px;
+}
+
+body.style-reading #editor h4 {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 36px;
+    margin-top: 36px;
+}
+
+body.style-reading #editor p {
+    margin: 36px 0;
+}
+
+body.style-reading #editor li p,
+body.style-reading #editor blockquote p,
+body.style-reading #editor table td p,
+body.style-reading #editor table th p {
+    margin: 0;
+}
+
+/* ゴシック(サンセリフ)派生 */
+body.style-reading.reading-sans #editor {
+    font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Arial, "Noto Sans JP", Meiryo, sans-serif;
+    letter-spacing: 0.02em;
+}
+
+/* ゴシックは技術文書寄り: h1/h2に下罫線を敷きセクションを追いやすくする */
+body.style-reading.reading-sans #editor h1,
+body.style-reading.reading-sans #editor h2 {
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid var(--md-table-border);
+}
+
+/* 見出しと直後の本文をさらに近づける。-22px+本文36px=間隔14px */
+body.style-reading.reading-sans #editor h1,
+body.style-reading.reading-sans #editor h2,
+body.style-reading.reading-sans #editor h3,
+body.style-reading.reading-sans #editor h4 {
+    margin-bottom: -22px;
+}
+
+body.style-reading.reading-sans #editor h1:last-child,
+body.style-reading.reading-sans #editor h2:last-child,
+body.style-reading.reading-sans #editor h3:last-child,
+body.style-reading.reading-sans #editor h4:last-child {
+    margin-bottom: 0;
+}
+
+body.style-reading #editor a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+}
+
+body.style-reading #editor a:hover {
+    text-decoration: none;
+}
+
+body.style-reading #editor strong {
+    font-weight: 700;
+}
+
+body.style-reading #editor ul,
+body.style-reading #editor ol {
+    margin: 36px 0;
+    padding-left: 24px;
+}
+
+body.style-reading #editor li {
+    margin: 9px 0;
+    line-height: 2;
+}
+
+body.style-reading #editor li ul,
+body.style-reading #editor li ol {
+    margin: 9px 0 0;
+}
+
+body.style-reading #editor blockquote {
+    margin: 36px 0;
+    padding: 25px 36px;
+    border: none;
+    border-radius: 4px;
+    background: var(--md-quote-bg);
+    font-size: 16px;
+    line-height: 2.25;
+}
+
+body.style-reading #editor blockquote blockquote {
+    margin: 18px 0 0;
+    padding: 0 0 0 20px;
+    border-left: 2px solid var(--md-hr-border);
+    background: transparent;
+}
+
+/* コード: 黒背景反転。本文より小さめだが読める大きさを保つ */
+body.style-reading #editor pre {
+    margin: 36px 0;
+    padding: 24px 28px;
+    border-radius: 8px;
+    background: var(--md-code-bg);
+}
+
+body.style-reading #editor pre,
+body.style-reading #editor pre code {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--md-code-fg);
+}
+
+body.style-reading #editor code {
+    font-size: 0.8em;
+    border-radius: 3px;
+}
+
+/* 区切り線は全幅でなく短い線を中央に置き、場面転換として読ませる */
+body.style-reading #editor hr {
+    width: 120px;
+    margin: 64px auto;
+    border: none;
+    border-bottom: 1px solid var(--md-hr-border);
+}
+
+body.style-reading #editor img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 36px auto;
+    border: 1px solid var(--md-img-border);
+}
+
+/* テーブルは縦罫線を消して横罫線のみの誌面風に */
+body.style-reading #editor table {
+    margin: 36px 0;
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+body.style-reading #editor table th,
+body.style-reading #editor table td {
+    border: none;
+    border-bottom: 1px solid var(--md-table-border);
+    padding: 10px 16px;
+}
+
+body.style-reading #editor table th {
+    border-bottom: 2px solid var(--md-hr-border);
+}
+
+body.style-reading #style-toggle {
+    color: var(--md-heading);
+    font-weight: 700;
 }

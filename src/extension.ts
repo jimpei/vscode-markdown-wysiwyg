@@ -73,6 +73,7 @@ class MarkdownWysiwygEditorProvider implements vscode.CustomTextEditorProvider {
 <body>
     <button id="outline-toggle" type="button" aria-label="アウトラインの表示切り替え">&#9776;</button>
     <button id="theme-toggle" type="button" aria-label="ライト/ダーク表示の切り替え">&#9789;</button>
+    <button id="style-toggle" type="button" aria-label="リーディングスタイルの切り替え(オフ/明朝/ゴシック)">Aa</button>
     <nav id="outline" class="outline-panel"></nav>
     <div id="editor"></div>
     <script nonce="${nonce}" src="${scriptUri}"></script>

@@ -10,11 +10,25 @@ declare global {
     interface Window {
         acquireVsCodeApi: () => {
             postMessage: (message: unknown) => void;
+            getState: () => unknown;
+            setState: (state: unknown) => void;
         };
     }
 }
 
 const vscode = window.acquireVsCodeApi();
+
+interface UiState {
+    themeLight?: boolean;
+    reading?: boolean;
+    readingFont?: 'serif' | 'sans';
+}
+
+const uiState: UiState = (vscode.getState() as UiState) ?? {};
+
+function saveUiState() {
+    vscode.setState(uiState);
+}
 
 let editor: Editor | undefined;
 let lastKnownMarkdown = '';
@@ -117,12 +131,53 @@ outlineToggle?.addEventListener('click', () => {
 });
 
 const themeToggle = document.getElementById('theme-toggle');
-themeToggle?.addEventListener('click', () => {
-    const isLight = document.body.classList.toggle('theme-light');
+
+function applyTheme() {
+    document.body.classList.toggle('theme-light', !!uiState.themeLight);
     if (themeToggle) {
-        themeToggle.textContent = isLight ? '☀' : '☽';
+        themeToggle.textContent = uiState.themeLight ? '☀' : '☽';
     }
+}
+
+themeToggle?.addEventListener('click', () => {
+    uiState.themeLight = !uiState.themeLight;
+    saveUiState();
+    applyTheme();
 });
+
+const styleToggle = document.getElementById('style-toggle');
+
+function applyStyle() {
+    const reading = !!uiState.reading;
+    const sans = reading && uiState.readingFont === 'sans';
+    document.body.classList.toggle('style-reading', reading);
+    document.body.classList.toggle('reading-sans', sans);
+    if (styleToggle) {
+        styleToggle.textContent = !reading ? 'Aa' : sans ? 'ゴ' : '明';
+        styleToggle.title = !reading
+            ? 'リーディングスタイル: オフ'
+            : sans
+              ? 'リーディングスタイル: ゴシック'
+              : 'リーディングスタイル: 明朝';
+    }
+}
+
+/* エディタ → リーディング(明朝) → リーディング(ゴシック) → エディタ の循環 */
+styleToggle?.addEventListener('click', () => {
+    if (!uiState.reading) {
+        uiState.reading = true;
+        uiState.readingFont = 'serif';
+    } else if (uiState.readingFont !== 'sans') {
+        uiState.readingFont = 'sans';
+    } else {
+        uiState.reading = false;
+    }
+    saveUiState();
+    applyStyle();
+});
+
+applyTheme();
+applyStyle();
 
 const root = document.getElementById('editor');
 if (root) {
